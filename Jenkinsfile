@@ -1,11 +1,21 @@
 pipeline {
-  agent any
-  stages {
-    stage('Print') {
-      steps {
-        echo 'Hello'
-      }
-    }
+    agent any
 
-  }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'echo "Building the application..."'
+            }
+        }   
+        stage('Test') {
+            steps {
+                sh 'echo "Testing the application..."'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploying the application..."'
+            }
+        }
+    }
 }
