@@ -16,12 +16,6 @@ pipeline {
         }   
 
         stage('Test') {
-            when {
-                expression {
-                    BRANCH_NAME == 'dev'
-                }
-            }
-
             steps {
                 sh 'echo "Testing the application..."'
             }
