@@ -18,4 +18,16 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            sh 'echo "Hello Post"'
+        }
+        success {
+            sh 'echo "Hello Post"'
+        }
+        failure {
+            sh 'echo "Hello Post"'
+        }
+    }
 }
