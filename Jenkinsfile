@@ -1,21 +1,33 @@
 pipeline {
-    agent any
+    agent {
+        label 'linux'
+    }
+    
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('davidgalstyan-dockerhub')
+    }
 
     stages {
-        stage("build") {
+        stage('Build') {
             steps {
-                sh '''
-                    docker build -t hello .
-                '''
+                sh 'docker build -t davidgalstyan/dp-alpine:latest .'
             }
         }
-
-        stage("run") {
+        stage('Login') {
             steps {
-                sh '''
-                    docker run --rm hello
-                '''
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USER --password-stdin'
             }
+        }
+        stage('Push') {
+            steps {
+                sh 'docker push davidgalstyan./dp-alpine:latest'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
